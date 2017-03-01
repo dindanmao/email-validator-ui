@@ -24,10 +24,17 @@ public class EmailValidator {
 		}
 		else{
 			String[] strArr = str.split("@");
-			if (strArr[1].contains(",") || strArr[1].contains("/")){
+			try{
+				if (strArr[1].contains(",") || strArr[1].contains("/")){
+					return false;
+				}
+				else{
+					return(counter == 1 && str.contains("."));
+				}
+			}
+			catch(ArrayIndexOutOfBoundsException e){
 				return false;
 			}
-		}
-		return(counter == 1 && str.contains("."));
+		}		
 	}
 }
