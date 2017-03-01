@@ -24,22 +24,38 @@ public class MyUI extends UI {
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        final VerticalLayout layout = new VerticalLayout();
+final VerticalLayout layout = new VerticalLayout();
         
-        final TextField name = new TextField();
-        name.setCaption("Type your name here:");
+        EmailValidator ev = new EmailValidator();
+        
+        final TextField email = new TextField();
+        email.setCaption("Type an email here:");
 
-        Button button = new Button("Click Me");
+        Button button = new Button("Check Email");
+        
         button.addClickListener( e -> {
-            layout.addComponent(new Label("Thanks " + name.getValue() 
-                    + ", it works!"));
+        	if(ev.isValidEmail(email.getValue())){
+        		layout.removeAllComponents();
+                layout.addComponents(email, button);
+                layout.setMargin(true);
+                layout.setSpacing(true);
+	            layout.addComponent(new Label("It is a valid email"));
+        	}
+        	else{
+        		layout.removeAllComponents();
+                layout.addComponents(email, button);
+                layout.setMargin(true);
+                layout.setSpacing(true);
+        		layout.addComponent(new Label("Invalid Email"));
+        	}
         });
         
-        layout.addComponents(name, button);
+        layout.addComponents(email, button);
         layout.setMargin(true);
         layout.setSpacing(true);
         
         setContent(layout);
+
     }
 
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
